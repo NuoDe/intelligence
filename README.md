@@ -1,6 +1,7 @@
 # [Intelligence](https://github.org/)&middot;[![GitHub license](http://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE)
 
 Intelligence是山东诺德公司自主研发的一套完整的开发平台。
+框架特点：架构清晰、技术先进、入门简单、易于维护、易于扩展、安全稳定。
 
 ## 当前版本: v1.0.0
 
