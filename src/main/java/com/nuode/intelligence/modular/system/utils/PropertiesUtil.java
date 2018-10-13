@@ -1,9 +1,8 @@
 package com.nuode.intelligence.modular.system.utils;
 
-import com.nuode.intelligence.modular.system.entity.DBInitialzation;
-import lombok.experimental.UtilityClass;
-
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -11,50 +10,46 @@ import java.util.Properties;
  * @created 2018-10-08-20:34
  */
 
-@UtilityClass
 public class PropertiesUtil {
+    private static String MYSQL_CONFIG_PATH = System.getProperty("user.dir") + "/src/main/resources/application.properties";
 
-    private static final String MYSQL_CONFIG_PATH = System.getProperty("user.dir") + "/src/main/resources/application-mysql.properties";
+    public PropertiesUtil(String MYSQL_CONFIG_PATH){
+        this.MYSQL_CONFIG_PATH = MYSQL_CONFIG_PATH;
+    }
 
-    private static final File CONFIG_FILE = new File(MYSQL_CONFIG_PATH);
+    public static boolean initProperties(Object object) {
 
-    private static FileInputStream CONFIG_FILE_INPUT_STRESM;
+        File configFile = new File(MYSQL_CONFIG_PATH);
 
-    static {
+        FileInputStream configInputStresm = null;
         try {
-            CONFIG_FILE_INPUT_STRESM = new FileInputStream(CONFIG_FILE);
+            configInputStresm = new FileInputStream(configFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public static boolean initProperties(DBInitialzation DBInitialzation) {
 
         Properties properties = new Properties();
 
-        if (ConnectionUtil.dbConnectionValidate(DBInitialzation.getUrl(), DBInitialzation.getUsername(), DBInitialzation.getPassword())) {
+        try {
+            properties.load(configInputStresm);
 
-            try {
-                properties.load(CONFIG_FILE_INPUT_STRESM);
+            Map map = ObjectUtils.objectToMap(object);
+            map.get("driverClassName");
+            Map hash = new HashMap();
+            hash.put("a","1");
+            hash.put("b","2");
+            System.out.println("map:" + map + ",当前方法:PropertiesUtil.initProperties()");
+            System.out.println("hash:" + hash + ",当前方法:PropertiesUtil.initProperties()");
+            properties.putAll(map);
 
-                System.out.println("initialzation.getUrl():" + DBInitialzation.getUrl() + ",当前方法:PropertiesUtil.initProperties()");
+            FileOutputStream outputStream = new FileOutputStream(configFile);
 
-                properties.put("spring.datasource.driver-class-name", "com.mysql.jdbc.Driver");
-                properties.put("spring.datasource.url", DBInitialzation.getUrl());
-                properties.put("spring.datasource.username", DBInitialzation.getUsername());
-                properties.put("spring.datasource.password", DBInitialzation.getPassword());
+            properties.store(outputStream, null);
 
-                FileOutputStream outputStream = new FileOutputStream(CONFIG_FILE);
-
-                properties.store(outputStream, null);
-
-                outputStream.close();
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } else {
+            outputStream.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }

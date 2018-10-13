@@ -8,9 +8,8 @@ import lombok.Data;
  * @author luzhenqian luzhenqian98@gmail.com
  * @created 2018-10-08-20:21
  */
-
-@Data
 @ApiModel("数据库信息配置实体")
+@Data
 public class DBInitialzation {
     @ApiModelProperty("数据库驱动类")
     private String driverClassName;

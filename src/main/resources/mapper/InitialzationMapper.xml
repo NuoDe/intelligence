@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuode.intelligence.modular.system.mapper.InitialzationMapper">
+    <insert id="setLoginPageInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into
+    SignIn_page
+     values
+    (0,#{logoUrl},#{backgroundImageUrl},
+    #{copyrightInfo},#{createTime})
+    </insert>
+
+
+    <select id="createLoginPageTable" resultType="java.lang.Object">
+    create table if not exists `SignIn_page` (
+        `id` int(11) not null AUTO_INCREMENT,
+        `logo_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL comment '企业Logo',
+        `background_image_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL comment '登录页背景图',
+        `copyright_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL comment '版权信息',
+        `create_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL comment '创建时间',
+        primary key(`id`) using btree
+    )
+    ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+    </select>
+</mapper>
